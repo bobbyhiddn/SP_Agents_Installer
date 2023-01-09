@@ -3,6 +3,21 @@ import os
 import re
 
 # Functions
+def prompt_app_vol_params():
+  """Prompt the user to enter the App Volumes manager address and port, or use the default values.
+  
+  Returns:
+    tuple: A tuple containing the manager address and port as strings.
+  """
+  use_defaults = input('Use default App Volumes manager address and port? (Y/N) ').lower() == 'y'
+  if use_defaults:
+    #Change these to suit your environment
+    return '<Manager_FQDN/IP>', '<port/443>'
+  else:
+    manager_addr = input('Enter App Volumes manager address: ')
+    manager_port = input('Enter App Volumes manager port: ')
+    return manager_addr, manager_port
+
 def get_installed_version(name):
   """Get the installed version of the given software.
   
@@ -34,12 +49,12 @@ def install_dem():
   ]
   subprocess.run(cmd)
 
-def install_app_vol():
+def install_app_vol(manager_addr, manager_port):
   """Install the VMware Horizon App Volumes agent.
   """
   msi_path = '\\\\dsfs\\software\\Horizon\\App Volumes Agent.msi'
-  manager_addr = '<Manager_FQDN/IP>'
-  manager_port = '<port/443>'
+  manager_addr = manager_addr
+  manager_port = manager_port
   log_path = 'C:\\Temp\\Logs\\InstallAppVol.log'
   cmd = [
       'msiexec', '/i', msi_path, '/qn',

@@ -1,6 +1,7 @@
-from Functions import get_installed_version, install_dem, install_app_vol
+from SP_Functions import prompt_app_vol_params, get_installed_version, install_dem, install_app_vol
 
 # Constants
+# I'm going to make this optional at some point.
 INSTALL_DEM = True
 INSTALL_APP_VOL = True
 
@@ -17,4 +18,5 @@ if INSTALL_APP_VOL:
   if app_vol_version:
     print(f'VMware Horizon App Volumes Agent {app_vol_version} is already installed.')
   else:
-    install_app_vol()
+    manager_addr, manager_port = prompt_app_vol_params()
+    install_app_vol(manager_addr, manager_port)
